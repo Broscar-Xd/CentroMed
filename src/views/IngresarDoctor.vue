@@ -5,28 +5,19 @@
       <b-card-text>
         <div>
   <b-form >
-    <label for="inline-form-input-name">Id</label>
-    <b-form-input
-      id="inline-form-input-name"
-      class="mb-2 mr-sm-2 mb-sm-0"
-      placeholder="Id"
-    ></b-form-input>
+    <label for="inline-form-input-id">Id de Empleado</label>
+    <select id="center">
+      <option v-for="(Employee,index) in listEmployee" :key=index :value="Employee.id">{{Employee.id}}</option>
+    </select>
     <br>
-    <label for="inline-form-input-name">Id de Empleado</label>
-    <b-form-input
-      id="inline-form-input-name"
-      class="mb-2 mr-sm-2 mb-sm-0"
-      placeholder="Id de Empleado"
-    ></b-form-input>
-    <br>
-    <label for="inline-form-input-name">Función</label>
+    <label for="inline-form-input-fun">Función</label>
     <b-form-input
       id="inline-form-input-name"
       class="mb-1 mr-sm-1 mb-sm-0"
       placeholder="Función"
     ></b-form-input>
     <br>
-    <label for="inline-form-input-name">Experiencia</label>
+    <label for="inline-form-input-ex">Experiencia</label>
     <b-form-input
       id="inline-form-input-name"
       class="mb-1 mr-sm-1 mb-sm-0"
@@ -43,7 +34,44 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    name: 'IngresarDoctor'
+  name: 'IngresarDoctor',
+  data(){
+    return {
+      medico:{
+        id: "",
+        funcion: "",
+        experiencia: ""
+      },
+      listEmployee: ''
+    }
+  },
+  methods:{
+    save(){
+      this.medico.id = document.getElementById("inline-form-input-id").value;
+      this.medico.funcion = document.getElementById("inline-form-input-fun").value;
+      this.medico.experiencia = document.getElementById("inline-form-input-ex").value;
+      axios.post("http://localhost:3000/api/createMedico",this.medico).then(res=>{
+        if(res.status == 200){
+          this.medico = res.data;
+        }
+      }).catch(e=>console.log(e));
+      this.medico.id = "";
+      this.medico.funcion = "";
+      this.medico.experiencia = "";
+    },
+    list(){
+      axios.get("http://localhost:3000/api/listEmployee")
+      .then(res=>{
+        this.listEmployee=res.data["empleado"];
+      })
+      .catch(e=>console.log(e));
+    },
+    save(){
+      var selectEmployee = document.getElementById("empleado").value;
+      console.log(selectEmployee);
+    }
+  }
 }
 </script>
