@@ -3,6 +3,7 @@
         <br><br><br>
        <b-card img-src="https://www.popularenlinea.com/SiteCollectionImages/personas/joven/Articulos/Diciembre/Imagen-Blog.png" img-alt="Card image" img-right img-height="500">
       <b-card-text>
+          
         <div>
   <b-form >
     <label for="inline-form-input-name">Seleccione el doctor</label>
